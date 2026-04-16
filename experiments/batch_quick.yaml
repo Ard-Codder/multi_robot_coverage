@@ -1,0 +1,14 @@
+# Короткая матрица для проверки (2×1, мало шагов)
+output_dir: results/batch_quick
+
+matrix:
+  algorithms:
+    - random_walk
+    - grid
+  seeds: [0]
+
+settings:
+  max_steps: 300
+  target_coverage: 0.95
+  save_plots: false
+  use_isaac_sim: false

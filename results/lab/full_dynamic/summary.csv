@@ -1,0 +1,11 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+baseline_random_walk,0,dynamic_B,0.4237588652482269,,671.4499999999996,0.0006311100830266248,900,0.0020400070789788607,0,3.1194836749748496,2,9,results\lab\full_dynamic\dynamic_B__baseline_random_walk__seed0.json
+baseline_grid,0,dynamic_B,0.20921985815602837,,674.8249999999999,0.0003100357250487584,900,0.0003667430421447752,0,4.136858322594591,0,31,results\lab\full_dynamic\dynamic_B__baseline_grid__seed0.json
+baseline_voronoi,0,dynamic_B,0.6210106382978723,,674.425,0.0009208001457506355,900,0.0009793412769116452,0,1.5059790283260281,0,46,results\lab\full_dynamic\dynamic_B__baseline_voronoi__seed0.json
+baseline_frontier,0,dynamic_B,0.5842198581560284,,672.6790572335178,0.0008684971709372228,900,0.0005955163298047539,0,0.6341946508608333,162,24,results\lab\full_dynamic\dynamic_B__baseline_frontier__seed0.json
+boustrophedon,0,dynamic_B,0.23093971631205673,,675.0,0.00034213291305489887,900,0.0,0,4.245488030348052,23,0,results\lab\full_dynamic\dynamic_B__boustrophedon__seed0.json
+stc,0,dynamic_B,0.4029255319148936,,674.6269563612343,0.0005972567922399234,900,0.00024029474051272755,0,6.6338249702024,1,51,results\lab\full_dynamic\dynamic_B__stc__seed0.json
+darp_boustro,0,dynamic_B,0.2522163120567376,,492.02348416991833,0.0005126103126606772,900,0.24144545187431982,0,3.489437413307302,3,7,results\lab\full_dynamic\dynamic_B__darp_boustro__seed0.json
+darp_stc,0,dynamic_B,0.2575354609929078,,447.78358472202757,0.0005751337694810298,900,0.3223294708155803,0,3.7696436635660233,2,80,results\lab\full_dynamic\dynamic_B__darp_stc__seed0.json
+cbs_boustrophedon,0,dynamic_B,0.23093971631205673,,675.0,0.00034213291305489887,900,0.0,0,4.245488030348052,23,0,results\lab\full_dynamic\dynamic_B__cbs_boustrophedon__seed0.json
+cbs_darp_boustro,0,dynamic_B,0.2522163120567376,,492.02348416991833,0.0005126103126606772,900,0.24144545187431982,0,3.489437413307302,3,7,results\lab\full_dynamic\dynamic_B__cbs_darp_boustro__seed0.json

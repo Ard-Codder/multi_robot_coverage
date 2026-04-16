@@ -1,0 +1,9 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+baseline_frontier,0,dynamic_B,0.5286596119929453,,633.8882828879432,0.0008339949266523989,900,0.025677478205936653,157,1.5098345839057257,272,53,results/lab/full_dynamic_seed0_v2\dynamic_B__baseline_frontier__seed0.json
+baseline_grid,0,dynamic_B,0.18915343915343916,,456.0,0.00041481017358210344,900,0.6791946714028679,876,2.5543257590373947,0,0,results/lab/full_dynamic_seed0_v2\dynamic_B__baseline_grid__seed0.json
+baseline_random_walk,0,dynamic_B,0.40828924162257496,,629.75,0.0006483354372728463,900,0.020543626888345552,181,2.3614973153280108,0,9,results/lab/full_dynamic_seed0_v2\dynamic_B__baseline_random_walk__seed0.json
+baseline_voronoi,0,dynamic_B,0.345679012345679,,379.0,0.0009120818267696016,900,0.0759635601615266,1182,1.2052367125968453,0,133,results/lab/full_dynamic_seed0_v2\dynamic_B__baseline_voronoi__seed0.json
+boustrophedon,0,dynamic_B,0.22971781305114639,,675.0,0.00034032268600169837,900,0.0,0,4.245488030348052,23,0,results/lab/full_dynamic_seed0_v2\dynamic_B__boustrophedon__seed0.json
+darp_boustro,0,dynamic_B,0.26278659611992944,,496.3680246322072,0.000529418864792199,900,0.10464688488075355,83,2.614002643834357,0,36,results/lab/full_dynamic_seed0_v2\dynamic_B__darp_boustro__seed0.json
+darp_stc,0,dynamic_B,0.2566137566137566,,443.6664026480156,0.0005783934845689501,900,0.24325706345884995,48,4.347413114403954,8,50,results/lab/full_dynamic_seed0_v2\dynamic_B__darp_stc__seed0.json
+stc,0,dynamic_B,0.3959435626102293,,649.1315811239892,0.0006099588652344446,900,0.04871435231827709,101,7.811921915652186,1,58,results/lab/full_dynamic_seed0_v2\dynamic_B__stc__seed0.json

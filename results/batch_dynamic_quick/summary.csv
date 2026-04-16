@@ -1,0 +1,4 @@
+algorithm,seed,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,distance_mean_m,distance_std_m,blocked_moves,use_isaac_sim,target_coverage,max_steps,json_path
+random_walk,0,0.05202821869488536,,55.84545836628795,0.000931646372273185,350,0.1295910435827659,18.61515278876265,2.412357076348387,0,False,0.6,350,results\batch_dynamic_quick\random_walk_seed0.json
+frontier,0,0.043209876543209874,,34.24275651163613,0.0012618691059093504,350,0.02556397960598676,11.414252170545376,0.29179370970541213,0,False,0.6,350,results\batch_dynamic_quick\frontier_seed0.json
+voronoi,0,0.006613756613756613,,6.454911732624025,0.0010246083738573472,350,0.12477928236366834,2.151637244208008,0.26847975123921625,0,False,0.6,350,results\batch_dynamic_quick\voronoi_seed0.json

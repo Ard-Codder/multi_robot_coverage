@@ -1,0 +1,38 @@
+scene:
+  name: "city_dynamic"
+  bounds_xy:
+    x_min: -12.0
+    x_max: 12.0
+    y_min: -12.0
+    y_max: 12.0
+  dt_sec: 0.1
+  grid_resolution_m: 0.5
+  num_robots: 3
+  max_steps: 2600
+  target_coverage: 0.90
+
+  rectangles:
+    - { x: -6.0, y:  6.5, w: 5.0, h: 3.5 }
+    - { x:  5.5, y:  6.0, w: 5.5, h: 4.0 }
+    - { x: -6.5, y: -5.5, w: 4.5, h: 5.5 }
+    - { x:  6.5, y: -6.0, w: 4.0, h: 5.0 }
+    - { x:  0.0, y:  0.0, w: 6.0, h: 2.5 }
+    - { x:  0.0, y:  3.8, w: 2.8, h: 2.4 }
+
+  obstacles: []
+
+  pedestrians:
+    - id: ped_0
+      x: -10.5
+      y: 0.0
+      goal_b_x: 10.5
+      goal_b_y: 0.0
+      radius_m: 0.36
+      max_speed_mps: 1.2
+    - id: ped_1
+      x: 0.0
+      y: -10.5
+      goal_b_x: 0.0
+      goal_b_y: 10.5
+      radius_m: 0.36
+      max_speed_mps: 1.0

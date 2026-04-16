@@ -1,0 +1,15 @@
+output_dir: results/batch_dynamic_quick
+
+matrix:
+  algorithms:
+    - random_walk
+    - frontier
+    - voronoi
+  seeds: [0]
+
+settings:
+  max_steps: 350
+  target_coverage: 0.60
+  save_plots: false
+  use_isaac_sim: false
+

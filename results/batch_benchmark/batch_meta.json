@@ -1,0 +1,13 @@
+{
+  "config": "experiments\\batch_benchmark.yaml",
+  "output_dir": "results\\batch_benchmark",
+  "runs": 25,
+  "summary_csv": "results\\batch_benchmark\\summary.csv",
+  "generated_at_utc": "2026-04-15T19:37:20.916507+00:00",
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "executable": "C:\\Users\\kirar\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+    "git_head": null
+  }
+}

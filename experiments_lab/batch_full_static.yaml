@@ -1,0 +1,18 @@
+output_dir: results/lab/full_static
+scene_path: experiments_lab/scenes/static_A_long.yaml
+
+matrix:
+  algorithms:
+    - baseline_random_walk
+    - baseline_grid
+    - baseline_voronoi
+    - baseline_frontier
+    - boustrophedon
+    - stc
+    - darp_boustro
+    - darp_stc
+    - cbs_boustrophedon
+    - cbs_darp_boustro
+    - ml_guided
+  seeds: [0, 1]
+

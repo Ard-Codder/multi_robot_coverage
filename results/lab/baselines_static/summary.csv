@@ -1,0 +1,13 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+baseline_random_walk,0,static_A,0.5332446808510638,,894.6500000000001,0.0005960371998558808,1200,0.001133709426876363,0,,2,0,results\lab\baselines_static\static_A__baseline_random_walk__seed0.json
+baseline_random_walk,1,static_A,0.43617021276595747,,889.0500000000009,0.0004906025676463157,1200,0.005002656452015565,3,,7,0,results\lab\baselines_static\static_A__baseline_random_walk__seed1.json
+baseline_random_walk,2,static_A,0.5261524822695035,,892.3749999999995,0.0005896091690931546,1200,0.004181111231330462,3,,5,0,results\lab\baselines_static\static_A__baseline_random_walk__seed2.json
+baseline_grid,0,static_A,0.25132978723404253,,899.75,0.0002793329116243874,1200,0.0003929462523959697,0,,0,0,results\lab\baselines_static\static_A__baseline_grid__seed0.json
+baseline_grid,1,static_A,0.24689716312056736,,899.6500000000001,0.00027443690670879493,1200,0.00043761506552609353,0,,2,0,results\lab\baselines_static\static_A__baseline_grid__seed1.json
+baseline_grid,2,static_A,0.17952127659574468,,899.525,0.00019957341552012973,1200,0.000374940595404035,0,,0,0,results\lab\baselines_static\static_A__baseline_grid__seed2.json
+baseline_voronoi,0,static_A,0.8266843971631206,,899.425,0.0009191254381000313,1200,0.0007343494351181269,0,,0,0,results\lab\baselines_static\static_A__baseline_voronoi__seed0.json
+baseline_voronoi,1,static_A,0.8125,,898.2,0.00090458695168114,1200,0.0028340953153769615,0,,4,0,results\lab\baselines_static\static_A__baseline_voronoi__seed1.json
+baseline_voronoi,2,static_A,0.813386524822695,,887.425,0.0009165693155170241,1200,0.017646315224817126,0,,4,0,results\lab\baselines_static\static_A__baseline_voronoi__seed2.json
+baseline_frontier,0,static_A,0.7712765957446809,,897.0495752500058,0.0008597926101572789,1200,0.0002764359328912775,0,,251,0,results\lab\baselines_static\static_A__baseline_frontier__seed0.json
+baseline_frontier,1,static_A,0.7384751773049646,,897.2626674954836,0.0008230312082037913,1200,5.312732133197222e-05,0,,462,0,results\lab\baselines_static\static_A__baseline_frontier__seed1.json
+baseline_frontier,2,static_A,0.8067375886524822,,896.4205103259135,0.0008999544068432515,1200,0.0004575722982207827,0,,108,0,results\lab\baselines_static\static_A__baseline_frontier__seed2.json

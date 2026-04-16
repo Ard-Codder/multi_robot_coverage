@@ -1,0 +1,22 @@
+Линия повествования для финальной презентации (multi-seed, long scenes)
+
+Данные:
+- static: results/lab/presentation_static/summary.csv (scene static_A_long, seeds 0..4)
+- dynamic: results/lab/presentation_dynamic/summary.csv (scene dynamic_B_long, seeds 0..4)
+- merged seed0: results/lab/presentation_merged_seed0.csv
+- medians: results/lab/presentation_multiseed_median.csv
+
+Основная история:
+1) baseline_voronoi и baseline_frontier дают лучший coverage на static/dynamic.
+2) baseline_frontier обычно быстрее по приросту coverage, но может хуже по robot-robot collisions.
+3) dynamic сцена обязательно обсуждается через robot_ped_violations + min_pedestrian_clearance_m.
+4) stc/darp_boustro стабильны как классические baseline, но уступают топу по coverage.
+
+Hero GIF для слайдов:
+- results/lab/presentation_static/static_A_long__baseline_voronoi__seed0.gif
+- results/lab/presentation_static/static_A_long__baseline_frontier__seed0.gif
+- results/lab/presentation_dynamic/dynamic_B_long__baseline_frontier__seed0.gif
+
+Визуальная проверка:
+- динамическая заливка coverage включена (show_dynamic_coverage=True),
+- robot-robot overlap предотвращается на уровне шага среды (до фиксации позиций).

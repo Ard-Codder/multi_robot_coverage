@@ -1,0 +1,106 @@
+world:
+  scene_name: "warehouse_multiple_shelves.usd"
+  use_isaac_sim: true
+  bounds_xy:
+    x_min: -12.0
+    x_max: 12.0
+    y_min: -12.0
+    y_max: 12.0
+
+# Статические препятствия для режима без Isaac Sim (kinematic fallback).
+# Формат: диски (x, y, r) в метрах в плоскости X–Y.
+fallback_obstacles:
+  - { x: 3.5, y: 0.5, r: 1.05 }
+  - { x: -4.0, y: 3.5, r: 0.85 }
+  - { x: -2.5, y: -4.0, r: 0.95 }
+simulation:
+  dt_sec: 0.1
+  max_steps: 1200
+coverage:
+  grid_resolution_m: 0.5
+  target_coverage: 0.95
+
+# Обучение PPO (coverage_sim/rl/coverage_ped_env.py, experiments/train_rl_coverage_ppo.py)
+rl_training:
+  bounds_xy:
+    x_min: -10.0
+    x_max: 10.0
+    y_min: -10.0
+    y_max: 10.0
+  grid_resolution_m: 1.0
+  target_coverage: 0.82
+  max_episode_steps: 450
+  step_scale_m: 1.25
+  num_robots: 3
+  fallback_obstacles:
+    - { x: 3.5, y: 0.5, r: 1.05 }
+    - { x: -4.0, y: 3.5, r: 0.85 }
+    - { x: -2.5, y: -4.0, r: 0.95 }
+  pedestrians:
+    enabled: true
+    defaults:
+      radius_m: 0.35
+      max_speed_mps: 1.05
+    behavior:
+      goal_switch_m: 0.45
+      repulse_robot_gain: 4.0
+      repulse_peer_gain: 2.2
+      repulse_static_gain: 3.5
+    agents:
+      - id: ped_0
+        x: -6.5
+        y: 1.5
+        goal_b_x: 6.5
+        goal_b_y: 1.5
+      - id: ped_1
+        x: 5.0
+        y: -3.5
+        goal_b_x: -5.0
+        goal_b_y: -3.5
+  reward:
+    coverage_scale: 70.0
+    collision_penalty: 12.0
+    near_penalty: 2.0
+    near_thresh_m: 0.32
+    step_penalty: 0.025
+    success_bonus: 25.0
+    new_cell_bonus: 0.35
+    spawn_jitter_m: 0.5
+
+# «Умные» пешеходы: патруль A↔B + отталкивание (см. coverage_sim/env/smart_pedestrians.py)
+pedestrians:
+  enabled: true
+  defaults:
+    radius_m: 0.36
+    max_speed_mps: 1.1
+  behavior:
+    goal_switch_m: 0.45
+    repulse_robot_gain: 4.0
+    repulse_peer_gain: 2.2
+    repulse_static_gain: 3.5
+    influence_robot_m: 3.5
+    influence_peer_m: 2.8
+    influence_static_m: 2.5
+  agents:
+    - id: ped_0
+      x: -6.0
+      y: 2.0
+      goal_b_x: 6.0
+      goal_b_y: 2.0
+    - id: ped_1
+      x: 5.0
+      y: -3.0
+      goal_b_x: -5.0
+      goal_b_y: -3.0
+  # Пример при enabled: true (коридор в bounds):
+  # agents:
+  #   - id: ped_0
+  #     x: -6.0
+  #     y: 2.0
+  #     goal_b_x: 6.0
+  #     goal_b_y: 2.0
+  #   - id: ped_1
+  #     x: 5.0
+  #     y: -3.0
+  #     goal_b_x: -5.0
+  #     goal_b_y: -3.0

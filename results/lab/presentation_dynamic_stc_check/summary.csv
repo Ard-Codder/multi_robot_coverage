@@ -1,0 +1,6 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+stc,0,dynamic_B_long,0.8000886524822695,240.4,1801.4500000000007,0.00044413591966597414,2404,0.00046152513664869416,1,7.982537399843312,0,86,results\lab\presentation_dynamic_stc_check\dynamic_B_long__stc__seed0.json
+stc,1,dynamic_B_long,0.8000886524822695,158.10000000000002,1184.8500000000004,0.0006752657741336618,1581,0.0005870121848015281,1,5.634440463068856,0,57,results\lab\presentation_dynamic_stc_check\dynamic_B_long__stc__seed1.json
+stc,2,dynamic_B_long,0.8000886524822695,163.70000000000002,1227.5,0.0006518033828776126,1637,0.00012554814669997014,0,7.798994425237525,0,52,results\lab\presentation_dynamic_stc_check\dynamic_B_long__stc__seed2.json
+stc,3,dynamic_B_long,0.8000886524822695,223.9,1669.6750000000009,0.0004791882566860431,2239,0.0030008021071259165,32,4.641587354124754,0,86,results\lab\presentation_dynamic_stc_check\dynamic_B_long__stc__seed3.json
+stc,4,dynamic_B_long,0.800531914893617,176.8,1324.1000000000008,0.0006045856920879212,1768,0.0010549592209571639,2,7.088806934189641,0,24,results\lab\presentation_dynamic_stc_check\dynamic_B_long__stc__seed4.json

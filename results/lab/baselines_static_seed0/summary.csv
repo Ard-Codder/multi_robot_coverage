@@ -1,0 +1,5 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+baseline_random_walk,0,static_A,0.5332446808510638,,894.6500000000001,0.0005960371998558808,1200,0.001133709426876363,0,,2,0,results\lab\baselines_static_seed0\static_A__baseline_random_walk__seed0.json
+baseline_grid,0,static_A,0.25132978723404253,,899.75,0.0002793329116243874,1200,0.0003929462523959697,0,,0,0,results\lab\baselines_static_seed0\static_A__baseline_grid__seed0.json
+baseline_voronoi,0,static_A,0.8266843971631206,,899.425,0.0009191254381000313,1200,0.0007343494351181269,0,,0,0,results\lab\baselines_static_seed0\static_A__baseline_voronoi__seed0.json
+baseline_frontier,0,static_A,0.7712765957446809,,897.0495752500058,0.0008597926101572789,1200,0.0002764359328912775,0,,251,0,results\lab\baselines_static_seed0\static_A__baseline_frontier__seed0.json

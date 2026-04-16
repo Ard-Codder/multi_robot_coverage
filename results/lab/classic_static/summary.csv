@@ -1,0 +1,9 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+boustrophedon,0,static_A,0.29654255319148937,,900.0,0.00032949172576832153,1200,0.0,0,,30,0,results\lab\classic_static\static_A__boustrophedon__seed0.json
+boustrophedon,1,static_A,0.30895390070921985,,899.975,0.00034329164777823813,1200,3.928480131036443e-05,0,,31,0,results\lab\classic_static\static_A__boustrophedon__seed1.json
+stc,0,static_A,0.46852836879432624,,899.4462909364571,0.0005209075555879147,1200,0.00035445352225128824,0,,1,0,results\lab\classic_static\static_A__stc__seed0.json
+stc,1,static_A,0.3820921985815603,,899.2732431758782,0.00042488998920079226,1200,0.00031618072788120946,0,,0,0,results\lab\classic_static\static_A__stc__seed1.json
+darp_boustro,0,static_A,0.3271276595744681,,659.3454521981521,0.0004961400104965871,1200,0.23830736511598205,0,,4,0,results\lab\classic_static\static_A__darp_boustro__seed0.json
+darp_boustro,1,static_A,0.30629432624113473,,536.913446133142,0.0005704724447619456,1200,0.49538189179575814,0,,27,0,results\lab\classic_static\static_A__darp_boustro__seed1.json
+darp_stc,0,static_A,0.27437943262411346,,596.1271263111363,0.0004602700003302765,1200,0.21766423476795319,0,,2,0,results\lab\classic_static\static_A__darp_stc__seed0.json
+darp_stc,1,static_A,0.2424645390070922,,593.8932169501979,0.00040826285279399737,1200,0.4593452847162472,0,,0,0,results\lab\classic_static\static_A__darp_stc__seed1.json

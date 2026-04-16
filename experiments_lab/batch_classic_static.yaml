@@ -1,0 +1,11 @@
+output_dir: results/lab/classic_static
+scene_path: experiments_lab/scenes/static_A_long.yaml
+
+matrix:
+  algorithms:
+    - boustrophedon
+    - stc
+    - darp_boustro
+    - darp_stc
+  seeds: [0, 1]
+

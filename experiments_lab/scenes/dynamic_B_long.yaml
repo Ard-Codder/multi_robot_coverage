@@ -1,0 +1,20 @@
+scene:
+  name: "dynamic_B_long"
+  bounds_xy: { x_min: -12.0, x_max: 12.0, y_min: -12.0, y_max: 12.0 }
+  dt_sec: 0.1
+  grid_resolution_m: 0.5
+  num_robots: 3
+  # Full-mode budget: long horizon for dynamic scene tuning.
+  max_steps: 9000
+  # Long-eval gate for presentation comparison (fixed scene).
+  target_coverage: 0.80
+
+  obstacles:
+    - { x: 3.5, y: 0.5, r: 1.05 }
+    - { x: -4.0, y: 3.5, r: 0.85 }
+    - { x: -2.5, y: -4.0, r: 0.95 }
+
+  pedestrians:
+    - { id: "ped_0", x: -6.0, y: 2.0, goal_b_x: 6.0, goal_b_y: 2.0, radius_m: 0.36, max_speed_mps: 1.05 }
+    - { id: "ped_1", x: 5.0, y: -3.0, goal_b_x: -5.0, goal_b_y: -3.0, radius_m: 0.36, max_speed_mps: 1.05 }
+

@@ -1,0 +1,2 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+ml_guided,0,static_A,0.0013297872340425532,,0.7110116737045393,0.0018702748256073582,1200,0.1977865411774798,0,,0,0,results\lab\ml_guided_static\static_A__ml_guided__seed0.json

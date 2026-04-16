@@ -1,0 +1,19 @@
+# Бенчмарк-набор для воспроизводимого сравнения (алгоритм × seed)
+# Цель: получать стабильный `summary.csv` и JSON под визуализацию `viz/playback.html`.
+output_dir: results/batch_benchmark
+
+matrix:
+  algorithms:
+    - random_walk
+    - grid
+    - voronoi
+    - frontier
+    - zonal
+  seeds: [0, 1, 2, 3, 4]
+
+settings:
+  max_steps: 1200
+  target_coverage: 0.95
+  save_plots: false
+  use_isaac_sim: false
+

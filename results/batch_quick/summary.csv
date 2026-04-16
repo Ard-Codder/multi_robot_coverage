@@ -1,0 +1,3 @@
+algorithm,seed,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,distance_mean_m,distance_std_m,blocked_moves,use_isaac_sim,target_coverage,max_steps,json_path
+random_walk,0,0.046296296296296294,,50.39450397285194,0.000918677487553734,300,0.1026266539827696,16.79816799095065,1.7239397739517281,0,False,0.95,300,results\batch_quick\random_walk_seed0.json
+grid,0,0.050705467372134036,,56.263527233147244,0.000901213803429325,300,0.014291325073572926,18.75450907771575,0.26802678582491013,0,False,0.95,300,results\batch_quick\grid_seed0.json

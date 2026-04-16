@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Просмотр прогона покрытия (Three.js)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a222d;
+      --text: #e8e4dc;
+      --muted: #8a9aad;
+      --accent: #c9a227;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Outfit", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 0.75rem 1.25rem;
+      background: var(--panel);
+      border-bottom: 1px solid #2a3544;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.5rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    header p {
+      margin: 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 52ch;
+    }
+    #wrap {
+      flex: 1;
+      position: relative;
+      min-height: 360px;
+    }
+    canvas { display: block; width: 100%; height: 100%; }
+    #hud {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      background: rgba(15, 20, 25, 0.88);
+      border: 1px solid #2a3544;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      pointer-events: none;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1rem;
+      margin-left: auto;
+    }
+    label.file {
+      cursor: pointer;
+      background: #243040;
+      border: 1px solid #3d4f66;
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+    }
+    label.file:hover { background: #2c3a4d; }
+    input[type="file"] { display: none; }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      background: var(--accent);
+      color: #1a1508;
+      border: none;
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    button.secondary {
+      background: #3d4f66;
+      color: var(--text);
+    }
+    input[type="range"] { width: 140px; vertical-align: middle; }
+    .mono { font-family: "JetBrains Mono", monospace; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Визуализация <span class="mono">robot_paths</span></h1>
+      <p>
+        Загрузите JSON из <span class="mono">results/…/*.json</span> (после <span class="mono">run_experiment</span>).
+        Плоскость XZ = ваши координаты симуляции (x, y). Для RL: тот же экспорт — увидите политику как движение.
+      </p>
+    </div>
+    <div class="controls">
+      <label class="file">JSON…<input type="file" id="file" accept=".json,application/json" /></label>
+      <button type="button" id="demo" class="secondary" title="Синтетика для проверки окна — для реальных траекторий загрузите JSON">Демо без файла</button>
+      <label class="mono">Кадр <input type="range" id="scrub" min="0" max="0" value="0" /></label>
+      <button type="button" id="play">▶</button>
+      <span class="mono" id="meta">—</span>
+    </div>
+  </header>
+  <div id="wrap">
+    <div id="hud">coverage: —<br/>step: — / —</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script>
+(function () {
+  const wrap = document.getElementById("wrap");
+  const hud = document.getElementById("hud");
+  const scrub = document.getElementById("scrub");
+  const meta = document.getElementById("meta");
+  const btnPlay = document.getElementById("play");
+  const fileInput = document.getElementById("file");
+
+  let scene, camera, renderer;
+  let robotMeshes = [];
+  let pedMeshes = [];
+  let trailLines = [];
+  let pedTrailLines = [];
+  let obstacleMeshes = [];
+  let data = null;
+  let maxFrames = 0;
+  let playing = false;
+  let lastT = 0;
+
+  const COLORS = [0xc8553d, 0x3d5a80, 0x81b29a, 0xf2cc8f, 0x9b6b9e];
+  const PED_COLORS = [0xe5989b, 0xb5838d, 0xffc6ff, 0x9b6b9e];
+
+  function initThree() {
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0f1419);
+
+    const aspect = wrap.clientWidth / Math.max(wrap.clientHeight, 200);
+    const frustumSize = 28;
+    camera = new THREE.OrthographicCamera(
+      frustumSize * aspect / -2,
+      frustumSize * aspect / 2,
+      frustumSize / 2,
+      frustumSize / -2,
+      0.1,
+      500
+    );
+    camera.position.set(0, 36, 0);
+    camera.lookAt(0, 0, 0);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    wrap.appendChild(renderer.domElement);
+
+    const amb = new THREE.AmbientLight(0xffffff, 0.55);
+    scene.add(amb);
+    const dir = new THREE.DirectionalLight(0xfff2dd, 0.85);
+    dir.position.set(8, 20, 6);
+    scene.add(dir);
+
+    window.addEventListener("resize", onResize);
+  }
+
+  function onResize() {
+    if (!camera || !renderer) return;
+    const w = wrap.clientWidth;
+    const h = Math.max(wrap.clientHeight, 200);
+    const aspect = w / h;
+    const frustumSize = camera.userData.frustumSize || 28;
+    camera.left = frustumSize * aspect / -2;
+    camera.right = frustumSize * aspect / 2;
+    camera.top = frustumSize / 2;
+    camera.bottom = frustumSize / -2;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+
+  function clearSceneDynamics() {
+    robotMeshes.forEach((m) => scene.remove(m));
+    pedMeshes.forEach((m) => scene.remove(m));
+    trailLines.forEach((l) => scene.remove(l));
+    pedTrailLines.forEach((l) => scene.remove(l));
+    obstacleMeshes.forEach((m) => scene.remove(m));
+    robotMeshes = [];
+    pedMeshes = [];
+    trailLines = [];
+    pedTrailLines = [];
+    obstacleMeshes = [];
+  }
+
+  function simToThree(x, y) {
+    return new THREE.Vector3(x, 0.35, y);
+  }
+
+  function buildFromPayload(json) {
+    clearSceneDynamics();
+    data = json;
+    const paths = json.robot_paths;
+    if (!paths || typeof paths !== "object") {
+      meta.textContent = "В JSON нет robot_paths — нужен свежий прогон run_experiment.";
+      return;
+    }
+
+    const names = Object.keys(paths).sort();
+    let xmin = Infinity, xmax = -Infinity, zmin = Infinity, zmax = -Infinity;
+    names.forEach((name) => {
+      const pts = paths[name];
+      if (!pts || !pts.length) return;
+      pts.forEach((p) => {
+        const x = p[0], y = p[1];
+        xmin = Math.min(xmin, x); xmax = Math.max(xmax, x);
+        zmin = Math.min(zmin, y); zmax = Math.max(zmax, y);
+      });
+    });
+
+    const obs = json.obstacles || [];
+    obs.forEach((o) => {
+      const x = o.x, y = o.y, r = o.r;
+      xmin = Math.min(xmin, x - r); xmax = Math.max(xmax, x + r);
+      zmin = Math.min(zmin, y - r); zmax = Math.max(zmax, y + r);
+    });
+
+    const pp = json.pedestrian_paths || {};
+    Object.keys(pp).forEach((pk) => {
+      (pp[pk] || []).forEach((p) => {
+        const x = p[0], y = p[1];
+        xmin = Math.min(xmin, x); xmax = Math.max(xmax, x);
+        zmin = Math.min(zmin, y); zmax = Math.max(zmax, y);
+      });
+    });
+
+    if (!isFinite(xmin)) {
+      xmin = -10; xmax = 10; zmin = -10; zmax = 10;
+    }
+    const pad = 1.5;
+    xmin -= pad; xmax += pad; zmin -= pad; zmax += pad;
+    const cx = (xmin + xmax) / 2;
+    const cz = (zmin + zmax) / 2;
+    const span = Math.max(xmax - xmin, zmax - zmin, 8);
+
+    const groundGeo = new THREE.PlaneGeometry(xmax - xmin, zmax - zmin);
+    const groundMat = new THREE.MeshStandardMaterial({
+      color: 0x1e2836,
+      roughness: 0.85,
+      metalness: 0.05,
+    });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.set(cx, 0, cz);
+    scene.add(ground);
+
+    const grid = new THREE.GridHelper(span, Math.ceil(span / 2), 0x2a3544, 0x1a222d);
+    grid.position.set(cx, 0.02, cz);
+    scene.add(grid);
+
+    obs.forEach((o) => {
+      const geom = new THREE.CylinderGeometry(o.r, o.r, 0.5, 32);
+      const mat = new THREE.MeshStandardMaterial({ color: 0x4a4e69, roughness: 0.6 });
+      const m = new THREE.Mesh(geom, mat);
+      m.position.set(o.x, 0.25, o.y);
+      scene.add(m);
+      obstacleMeshes.push(m);
+    });
+
+    names.forEach((name, i) => {
+      const pts = paths[name];
+      if (!pts || !pts.length) return;
+      const col = COLORS[i % COLORS.length];
+      const geo = new THREE.BoxGeometry(0.55, 0.35, 0.85);
+      const mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.45 });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh);
+      robotMeshes.push({ name, mesh, pts });
+
+      const curvePts = pts.map((p) => simToThree(p[0], p[1]));
+      const geomL = new THREE.BufferGeometry().setFromPoints(curvePts);
+      const matL = new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.35 });
+      const line = new THREE.Line(geomL, matL);
+      scene.add(line);
+      trailLines.push(line);
+    });
+
+    Object.keys(pp)
+      .sort()
+      .forEach((pname, pi) => {
+        const pts = pp[pname];
+        if (!pts || !pts.length) return;
+        const col = PED_COLORS[pi % PED_COLORS.length];
+        const pr = 0.3;
+        const geo = new THREE.CylinderGeometry(pr, pr, 0.6, 20);
+        const mat = new THREE.MeshStandardMaterial({
+          color: col,
+          roughness: 0.5,
+          emissive: col,
+          emissiveIntensity: 0.08,
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        scene.add(mesh);
+        pedMeshes.push({ mesh, pts });
+
+        const curvePts = pts.map((p) => simToThree(p[0], p[1]));
+        const geomL = new THREE.BufferGeometry().setFromPoints(curvePts);
+        const matL = new THREE.LineBasicMaterial({
+          color: col,
+          transparent: true,
+          opacity: 0.28,
+        });
+        const line = new THREE.Line(geomL, matL);
+        scene.add(line);
+        pedTrailLines.push(line);
+      });
+
+    const robotMax = Math.max(0, ...names.map((n) => (paths[n] ? paths[n].length - 1 : 0)));
+    const pedKeys = Object.keys(pp);
+    const pedMax =
+      pedKeys.length === 0
+        ? 0
+        : Math.max(0, ...pedKeys.map((k) => (pp[k] ? pp[k].length - 1 : 0)));
+    maxFrames = Math.max(robotMax, pedMax);
+    scrub.max = String(maxFrames);
+    scrub.value = "0";
+
+    const algo = json.algorithm || "?";
+    const cov = json.coverage_percent != null ? (json.coverage_percent * 100).toFixed(1) + "%" : "—";
+    meta.textContent = algo + " · coverage " + cov + " · кадров " + (maxFrames + 1);
+
+    camera.userData.frustumSize = span * 0.65;
+    const fs = camera.userData.frustumSize;
+    const aspect = wrap.clientWidth / Math.max(wrap.clientHeight, 200);
+    camera.left = fs * aspect / -2;
+    camera.right = fs * aspect / 2;
+    camera.top = fs / 2;
+    camera.bottom = fs / -2;
+    const camH = Math.max(span * 0.85, 12);
+    camera.position.set(cx, camH, cz);
+    camera.lookAt(cx, 0, cz);
+    camera.updateProjectionMatrix();
+
+    setFrame(0);
+  }
+
+  function setFrame(fi) {
+    fi = Math.max(0, Math.min(fi, maxFrames));
+    scrub.value = String(fi);
+    let covText = "—";
+    if (data && data.coverage_history && data.coverage_history.length) {
+      const idx = Math.min(fi, data.coverage_history.length - 1);
+      covText = (data.coverage_history[idx] * 100).toFixed(2) + "%";
+    }
+    hud.innerHTML = "coverage: " + covText + "<br/>step: " + fi + " / " + maxFrames;
+
+    robotMeshes.forEach(({ mesh, pts }) => {
+      const p = pts[Math.min(fi, pts.length - 1)];
+      if (!p) return;
+      const t = simToThree(p[0], p[1]);
+      mesh.position.copy(t);
+      const prev = pts[Math.max(0, Math.min(fi, pts.length - 1) - 1)];
+      if (prev) {
+        const dx = p[0] - prev[0];
+        const dy = p[1] - prev[1];
+        if (dx * dx + dy * dy > 1e-8) {
+          mesh.rotation.y = Math.atan2(dx, dy);
+        }
+      }
+    });
+    pedMeshes.forEach(({ mesh, pts }) => {
+      const p = pts[Math.min(fi, pts.length - 1)];
+      if (!p) return;
+      mesh.position.set(p[0], 0.3, p[1]);
+      const prev = pts[Math.max(0, Math.min(fi, pts.length - 1) - 1)];
+      if (prev) {
+        const dx = p[0] - prev[0];
+        const dy = p[1] - prev[1];
+        if (dx * dx + dy * dy > 1e-8) {
+          mesh.rotation.y = Math.atan2(dx, dy);
+        }
+      }
+    });
+    renderer.render(scene, camera);
+  }
+
+  function _demoWander(n, x0, y0, seed, bounds) {
+    const [xmin, xmax, ymin, ymax] = bounds;
+    let s = seed >>> 0;
+    const out = [[x0, y0]];
+    let x = x0;
+    let y = y0;
+    const step = 0.22;
+    for (let i = 1; i < n; i++) {
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      const ang = (s % 6283) / 1000;
+      x += Math.cos(ang) * step;
+      y += Math.sin(ang) * step;
+      x = Math.max(xmin, Math.min(xmax, x));
+      y = Math.max(ymin, Math.min(ymax, y));
+      out.push([x, y]);
+    }
+    return out;
+  }
+
+  function loadDemo() {
+    const bounds = [-7.5, 7.5, -7.5, 7.5];
+    const n = 140;
+    const json = {
+      algorithm: "demo_synthetic",
+      coverage_percent: 0.35,
+      coverage_history: Array.from({ length: n }, (_, i) =>
+        Math.min(0.42, 0.08 + (i / n) * 0.28 + ((i * 13) % 7) * 0.002)
+      ),
+      obstacles: [{ x: 2, y: 0.5, r: 1.1 }, { x: -3.5, y: -2.2, r: 0.85 }],
+      robot_paths: {
+        robot_0: _demoWander(n, -5, -1, 11, bounds),
+        robot_1: _demoWander(n, 4, 3, 29, bounds),
+        robot_2: _demoWander(n, -1, -4.5, 73, bounds),
+      },
+    };
+    buildFromPayload(json);
+  }
+
+  function tick(t) {
+    requestAnimationFrame(tick);
+    if (playing && data) {
+      const speed = 18;
+      const frame = Math.floor((t - lastT) / (1000 / speed));
+      if (frame >= 1) {
+        lastT = t;
+        let next = parseInt(scrub.value, 10) + 1;
+        if (next > maxFrames) next = 0;
+        setFrame(next);
+      }
+    }
+    if (renderer && scene && camera) renderer.render(scene, camera);
+  }
+
+  initThree();
+  loadDemo();
+
+  scrub.addEventListener("input", () => setFrame(parseInt(scrub.value, 10)));
+  btnPlay.addEventListener("click", () => {
+    playing = !playing;
+    btnPlay.textContent = playing ? "❚❚" : "▶";
+    lastT = performance.now();
+  });
+  fileInput.addEventListener("change", (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        buildFromPayload(JSON.parse(r.result));
+      } catch (err) {
+        meta.textContent = "Ошибка JSON: " + err.message;
+      }
+    };
+    r.readAsText(f);
+  });
+  document.getElementById("demo").addEventListener("click", loadDemo);
+
+  requestAnimationFrame(tick);
+})();
+  </script>
+</body>
+</html>

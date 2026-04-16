@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# IDE / OS
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Local experiment scratch
+experiments_lab/_tmp_*.yaml
+
+# Optional local service outputs
+results/panel_uploads/
+results/agent_runs/
+
+# RL transient outputs
+results/lab/rl/**/checkpoints/
+results/lab/rl/**/eval/
+results/lab/rl/**/tb/
+
+# Cursor / local tooling
+.cursor/
+agent-tools/
+
+# Private / non-public docs
+docs/conference_talk_5min.md
+docs/conference_speaker_notes.md
+docs/THESIS_CHECKLIST.md
+docs/SURVEY_ML_PLANNERS_VLA.md
+docs/SCENE_RL_SPEC.md
+docs/REPRODUCIBILITY.md
+*Классические алгоритмы покрытия территории*.pdf
+

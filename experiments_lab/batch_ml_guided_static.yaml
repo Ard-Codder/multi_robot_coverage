@@ -1,0 +1,8 @@
+output_dir: results/lab/ml_guided_static
+scene_path: experiments_lab/scenes/static_A.yaml
+
+matrix:
+  algorithms:
+    - ml_guided
+  seeds: [0]
+

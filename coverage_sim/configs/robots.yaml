@@ -1,0 +1,10 @@
+robots:
+  count: 3
+  names:
+    - robot_0
+    - robot_1
+    - robot_2
+controller:
+  kp_linear: 1.2
+  max_step_m: 0.25
+

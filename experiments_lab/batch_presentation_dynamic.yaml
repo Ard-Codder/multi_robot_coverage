@@ -1,0 +1,12 @@
+output_dir: results/lab/presentation_dynamic
+scene_path: experiments_lab/scenes/dynamic_B_long.yaml
+
+matrix:
+  algorithms:
+    - baseline_grid
+    - baseline_voronoi
+    - baseline_frontier
+    - darp_boustro
+    - stc
+  seeds: [0, 1, 2, 3, 4]
+

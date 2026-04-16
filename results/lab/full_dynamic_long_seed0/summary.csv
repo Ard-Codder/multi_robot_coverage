@@ -1,0 +1,5 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+baseline_frontier,0,dynamic_B_long,0.75,116.7,872.5258203039434,0.0008595734161067443,1167,0.0003200525925520974,0,8.026536353212625,245,46,results\lab\full_dynamic_long_seed0\dynamic_B_long__baseline_frontier__seed0.json
+baseline_voronoi,0,dynamic_B_long,0.75,108.9,816.175,0.0009189205746316661,1089,0.0008092532124619368,0,7.2054835792188765,0,46,results\lab\full_dynamic_long_seed0\dynamic_B_long__baseline_voronoi__seed0.json
+stc,0,dynamic_B_long,0.7043439716312057,,1648.117066463547,0.00042736282874768976,2200,0.00022827297156137864,0,3.065808725831044,4,75,results\lab\full_dynamic_long_seed0\dynamic_B_long__stc__seed0.json
+cbs_boustrophedon,0,dynamic_B_long,0.5110815602836879,,1649.3250000000007,0.0003098731664673049,2200,0.00012861748555061692,0,2.2297079824497676,353,122,results\lab\full_dynamic_long_seed0\dynamic_B_long__cbs_boustrophedon__seed0.json

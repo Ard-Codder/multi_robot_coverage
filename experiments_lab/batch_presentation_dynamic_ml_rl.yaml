@@ -1,0 +1,11 @@
+output_dir: results/lab/presentation_dynamic_ml_rl
+scene_path: experiments_lab/scenes/dynamic_B_long.yaml
+
+matrix:
+  algorithms:
+    - ml_guided
+    - ppo_policy
+    - baseline_voronoi
+    - baseline_frontier
+  seeds: [0, 1, 2]
+

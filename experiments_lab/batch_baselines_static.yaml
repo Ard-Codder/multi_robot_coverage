@@ -1,0 +1,11 @@
+output_dir: results/lab/baselines_static
+scene_path: experiments_lab/scenes/static_A.yaml
+
+matrix:
+  algorithms:
+    - baseline_random_walk
+    - baseline_grid
+    - baseline_voronoi
+    - baseline_frontier
+  seeds: [0, 1, 2]
+

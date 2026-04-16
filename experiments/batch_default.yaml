@@ -1,0 +1,19 @@
+# Матрица экспериментов для сравнения алгоритмов (см. experiments/run_batch.py).
+# По умолчанию пакетный прогон идёт без Isaac (kinematic fallback), см. settings.use_isaac_sim.
+
+output_dir: results/batch
+
+matrix:
+  algorithms:
+    - random_walk
+    - grid
+    - voronoi
+    - frontier
+    - zonal
+  seeds: [0, 1, 2]
+
+settings:
+  max_steps: 1200
+  target_coverage: 0.95
+  save_plots: false
+  use_isaac_sim: false

@@ -1,0 +1,5 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+boustrophedon,0,static_A,0.29654255319148937,,900.0,0.00032949172576832153,1200,0.0,0,,30,0,results\lab\classic_static_seed0_v2\static_A__boustrophedon__seed0.json
+stc,0,static_A,0.46852836879432624,,899.4462909364571,0.0005209075555879147,1200,0.00035445352225128824,0,,1,0,results\lab\classic_static_seed0_v2\static_A__stc__seed0.json
+darp_boustro,0,static_A,0.3271276595744681,,659.3454521981521,0.0004961400104965871,1200,0.23830736511598205,0,,4,0,results\lab\classic_static_seed0_v2\static_A__darp_boustro__seed0.json
+darp_stc,0,static_A,0.27437943262411346,,596.1271263111363,0.0004602700003302765,1200,0.21766423476795319,0,,2,0,results\lab\classic_static_seed0_v2\static_A__darp_stc__seed0.json

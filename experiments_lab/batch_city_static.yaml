@@ -1,0 +1,12 @@
+output_dir: "results/lab/city_static_quick"
+scene_path: "experiments_lab/scenes/city_static.yaml"
+matrix:
+  seeds: [0]
+  algorithms:
+    - baseline_frontier
+    - baseline_voronoi
+    - baseline_grid
+    - boustrophedon
+    - stc
+    - darp_boustro
+    - darp_stc

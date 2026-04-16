@@ -1,0 +1,11 @@
+output_dir: results/lab/full_dynamic_long_seed0
+scene_path: experiments_lab/scenes/dynamic_B_long.yaml
+
+matrix:
+  algorithms:
+    - baseline_frontier
+    - baseline_voronoi
+    - stc
+    - cbs_boustrophedon
+  seeds: [0]
+

@@ -1,0 +1,9 @@
+output_dir: results/lab/mapf_cbs_static
+scene_path: experiments_lab/scenes/static_A.yaml
+
+matrix:
+  algorithms:
+    - cbs_boustrophedon
+    - cbs_darp_boustro
+  seeds: [0]
+

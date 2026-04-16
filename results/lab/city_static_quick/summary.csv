@@ -1,0 +1,8 @@
+algorithm,seed,scene,coverage_percent,time_to_coverage_sec,distance_travelled_m,efficiency,steps,load_balance_cv,blocked_moves,min_pedestrian_clearance_m,robot_robot_collisions,robot_ped_violations,json_path
+baseline_frontier,0,city_static,0.9200438116100766,119.60000000000001,893.1302257773485,0.0010301339995623857,1196,0.00029290447982710516,0,,271,0,results\lab\city_static_quick\city_static__baseline_frontier__seed0.json
+baseline_voronoi,0,city_static,0.9200438116100766,121.0,826.45,0.0011132480024321817,1210,0.11125545450061741,0,,0,0,results\lab\city_static_quick\city_static__baseline_voronoi__seed0.json
+baseline_grid,0,city_static,0.18455640744797372,,1643.450000000003,0.00011229815780703604,2200,0.00010756438911820561,0,,76,0,results\lab\city_static_quick\city_static__baseline_grid__seed0.json
+boustrophedon,0,city_static,0.4419496166484118,,1640.3250000000062,0.0002694280808061879,2200,0.001440565729158635,0,,206,0,results\lab\city_static_quick\city_static__boustrophedon__seed0.json
+stc,0,city_static,0.7217962760131434,,1647.2143258820088,0.0004381920826402807,2200,0.00019733446408618684,0,,23,0,results\lab\city_static_quick\city_static__stc__seed0.json
+darp_boustro,0,city_static,0.4539978094194962,,1107.6376297822248,0.00040987936596985944,2200,0.2143734898500452,0,,10,0,results\lab\city_static_quick\city_static__darp_boustro__seed0.json
+darp_stc,0,city_static,0.47480832420591457,,1176.7864886902028,0.00040347873532639713,2200,0.11670022851809601,0,,8,0,results\lab\city_static_quick\city_static__darp_stc__seed0.json

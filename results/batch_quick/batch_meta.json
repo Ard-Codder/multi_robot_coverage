@@ -1,0 +1,13 @@
+{
+  "config": "experiments\\batch_quick.yaml",
+  "output_dir": "results\\batch_quick",
+  "runs": 2,
+  "summary_csv": "results\\batch_quick\\summary.csv",
+  "generated_at_utc": "2026-04-15T19:36:15.754870+00:00",
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "executable": "C:\\Users\\kirar\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+    "git_head": null
+  }
+}
