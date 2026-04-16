@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <i>Curated public results: dynamic benchmark panel from the final report.</i>
+  <i>Curated public results: dynamic benchmark panel from the final report. Methods without data for a given panel are hidden and are not shown as zero bars.</i>
 </p>
 
 ## Quick Links
@@ -44,6 +44,28 @@
 
 <p>
   <img src="results/lab/presentation_dynamic_rl/dynamic_B_long__ppo_policy__seed0.gif" alt="RL guided demo" width="420">
+</p>
+
+### Report panels
+
+Ниже показаны уже **исправленные public-facing панели**: если для алгоритма нет данных в конкретной сцене или метрике, он не рисуется как нулевой столбец.
+
+**Static (median over seeds)**
+
+<p>
+  <img src="results/lab/presentation_report/panel_median_static.png" alt="Static benchmark panel" width="760">
+</p>
+
+**Dynamic (median over seeds)**
+
+<p>
+  <img src="results/lab/presentation_report/panel_median_dynamic.png" alt="Dynamic benchmark panel" width="760">
+</p>
+
+**Seed 0: static vs dynamic**
+
+<p>
+  <img src="results/lab/presentation_report/panel_seed0_static_dynamic.png" alt="Seed 0 comparison panel" width="760">
 </p>
 
 ## Research Core
