@@ -4,14 +4,6 @@
 единая симуляционная постановка, reproducible batch-эксперименты и сравнение
 классических, MAPF-, RL- и ML-guided подходов в статических и динамических сценах.
 
-<p align="center">
-  <img src="results/lab/presentation_report/panel_median_dynamic.png" alt="Dynamic benchmark panel" width="820">
-</p>
-
-<p align="center">
-  <i>Curated public results: dynamic benchmark panel from the final report. Methods without data for a given panel are hidden and are not shown as zero bars.</i>
-</p>
-
 ## Quick Links
 
 - [Main Results](#main-results)
