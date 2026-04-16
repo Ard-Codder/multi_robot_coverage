@@ -54,13 +54,24 @@ def render_2x2_panel(
     fig.suptitle(title)
 
     for ax, (mkey, label, fmt) in zip(axes.flat, metrics):
+        present = []
         vals = []
         for a in algos:
             v = algo_stats.get(a, {}).get(mkey)
-            vals.append(0.0 if v is None else float(v))
-        ax.bar(range(len(algos)), vals)
-        ax.set_xticks(range(len(algos)))
-        ax.set_xticklabels(algos, rotation=20, ha="right", fontsize=9)
+            if v is None:
+                continue
+            present.append(a)
+            vals.append(float(v))
+        if not present:
+            ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=11)
+            ax.set_xticks([])
+            ax.set_yticks([])
+            ax.set_ylabel(label)
+            ax.grid(False)
+            continue
+        ax.bar(range(len(present)), vals)
+        ax.set_xticks(range(len(present)))
+        ax.set_xticklabels(present, rotation=20, ha="right", fontsize=9)
         ax.set_ylabel(label)
         # annotate bars
         for i, v in enumerate(vals):
