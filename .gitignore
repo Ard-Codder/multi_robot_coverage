@@ -224,16 +224,18 @@ preview.zip
 *.tgz
 *.rar
 
-# Generated GIFs / videos (allow project / showcase assets via explicit exception)
+# Generated GIFs / videos (exceptions MUST be listed after *.gif)
 *.gif
 *.mp4
 *.mov
 *.avi
 *.webm
-!docs/assets/**/*.gif
+!docs/assets/**
 !coverage_lab/**/assets/**/*.gif
 !results/lab/presentation_report/**/*.gif
 !results/lab/showcase/**/*.gif
+!results/lab/presentation_dynamic/dynamic_B_long__baseline_voronoi__seed0.gif
+!results/lab/ideal_coverage_demo/large_complex_dynamic__ml_guided_guarded__seed2_isaac.gif
 
 # =============================================================================
 # Environment / secrets

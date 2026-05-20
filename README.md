@@ -13,7 +13,7 @@
 
 <br />
 
-<img src="results/lab/final_large_complex/large_complex_dynamic__ml_guided__seed2_coverage_2d.png" alt="ML-guided покрытие 8 роботами на large_complex_dynamic" width="720" />
+<img src="docs/assets/readme/ml_guided_coverage_2d.png" alt="ML-guided покрытие 8 роботами на large_complex_dynamic" width="720" />
 
 <sub><em>Прогон <code>ml_guided</code>, 8 роботов на сцене <code>large_complex_dynamic</code>:
 каждый робот ведёт свою траекторию, обходит свою зону, общее покрытие
@@ -46,7 +46,7 @@
 ### Траектории — `baseline_voronoi`, динамическая сцена с пешеходами
 
 <p align="center">
-  <img src="results/lab/presentation_dynamic/dynamic_B_long__baseline_voronoi__seed0.gif" alt="Voronoi: траектории в динамической сцене" width="520" />
+  <img src="docs/assets/readme/voronoi_dynamic_seed0.gif" alt="Voronoi: траектории в динамической сцене" width="520" />
 </p>
 
 <sub><em>Три робота разбивают рабочее пространство на зоны Вороного и
@@ -56,7 +56,7 @@
 ### 3D-replay в Isaac Sim — `ml_guided_guarded`, seed 2
 
 <p align="center">
-  <img src="results/lab/ideal_coverage_demo/large_complex_dynamic__ml_guided_guarded__seed2_isaac.gif" alt="3D-replay в Isaac Sim по JSON прогона" width="640" />
+  <img src="docs/assets/readme/isaac_ml_guided_guarded_seed2.gif" alt="3D-replay в Isaac Sim по JSON прогона" width="640" />
 </p>
 
 <sub><em>Тот же JSON-лог прогона переигран в Isaac Sim 5: согласованные
