@@ -1,0 +1,14 @@
+output_dir: results/lab/ideal_coverage_demo
+scene_path: experiments_lab/scenes/large_complex_dynamic.yaml
+
+matrix:
+  algorithms:
+    - baseline_voronoi
+    - baseline_frontier
+    - stc
+    - darp_boustro
+    - ml_guided_guarded
+    - ml_goal_soft_guarded
+    - ml_goal_ranked
+    - ml_goal_allocated
+  seeds: [0, 1, 2]

@@ -49,9 +49,9 @@ def render_2x2_panel(
     algo_stats: Dict[str, Dict[str, float | None]],
     algos: List[str],
 ) -> None:
-    fig, axes = plt.subplots(2, 2, figsize=(11.2, 7.0))
+    fig, axes = plt.subplots(2, 2, figsize=(16.0, 11.0))
     axes = axes.reshape(2, 2)
-    fig.suptitle(title)
+    fig.suptitle(title, fontsize=22, fontweight="bold")
 
     for ax, (mkey, label, fmt) in zip(axes.flat, metrics):
         present = []
@@ -63,23 +63,24 @@ def render_2x2_panel(
             present.append(a)
             vals.append(float(v))
         if not present:
-            ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=11)
+            ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=16)
             ax.set_xticks([])
             ax.set_yticks([])
-            ax.set_ylabel(label)
+            ax.set_ylabel(label, fontsize=17, fontweight="bold")
             ax.grid(False)
             continue
         ax.bar(range(len(present)), vals)
         ax.set_xticks(range(len(present)))
-        ax.set_xticklabels(present, rotation=20, ha="right", fontsize=9)
-        ax.set_ylabel(label)
-        # annotate bars
+        ax.set_xticklabels(present, rotation=25, ha="right", fontsize=16, fontweight="bold")
+        ax.set_ylabel(label, fontsize=17, fontweight="bold")
+        ax.tick_params(axis="y", labelsize=14)
         for i, v in enumerate(vals):
-            ax.text(i, v, fmt.format(v), ha="center", va="bottom", fontsize=8, rotation=0)
+            ax.text(i, v, fmt.format(v), ha="center", va="bottom", fontsize=14, fontweight="bold", rotation=0)
         ax.grid(True, axis="y", alpha=0.25)
+        ax.margins(y=0.22)
 
-    fig.tight_layout(rect=(0, 0, 1, 0.95))
-    fig.savefig(out_png, dpi=160)
+    fig.tight_layout(rect=(0, 0.02, 1, 0.95))
+    fig.savefig(out_png, dpi=160, bbox_inches="tight")
     plt.close(fig)
 
 

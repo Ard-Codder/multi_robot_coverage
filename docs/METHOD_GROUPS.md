@@ -1,5 +1,33 @@
 # Method Groups In This Repository
 
+Для дипломной работы этот файл стоит читать вместе с
+[`DIPLOMA_RESEARCH_PACKAGE.md`](DIPLOMA_RESEARCH_PACKAGE.md). Ниже перечислены
+реализованные группы методов, а дипломная классификация дополнительно сравнивает
+их по применимости: уровень принятия решений, тип среды, координация агентов,
+обучаемость и проверяемость.
+
+## Diploma Classification Layer
+
+В литературе coverage path planning часто классифицируют по математическому
+семейству: cellular decomposition, grid-based planning, spanning tree coverage,
+frontier exploration, coverage control, MAPF, RL или learning-based navigation.
+Для практической multi-robot задачи такой классификации недостаточно, потому что
+нужно выбрать метод под ограничения конкретной среды.
+
+В этой работе используется прикладная классификация:
+
+| Ось | Что сравнивается | Примеры в проекте |
+|---|---|---|
+| Уровень решения | full coverage route, next-target planner, deconfliction layer, learned policy | `stc`, `baseline_frontier`, `CBSDeconflictWrapper`, `ppo_policy` |
+| Знание карты | known static map, partially explored map, dynamic scene | `baseline_grid`, `baseline_frontier`, `dynamic_B_long` |
+| Координация | partitioning, implicit competition, explicit MAPF deconfliction | `baseline_voronoi`, `darp_boustro`, `cbs_*` |
+| Обучаемость | algorithmic, RL, supervised/hybrid, VLA/foundation model | `stc`, `ppo_policy`, `ml_guided`, VLA survey |
+| Safety validation | static obstacles only, robot-robot conflicts, pedestrians | blocked moves, collisions, pedestrian metrics |
+
+Такой слой классификации нужен, чтобы в дипломе защищать не только список
+реализованных алгоритмов, но и критерии выбора метода для похожих прикладных
+задач: уборка, инспекция, мониторинг, патрулирование и поиск.
+
 ## 1. Classical Coverage Methods
 Цель группы: покрытие территории за счет явного разбиения пространства и заранее определенной логики обхода.
 
@@ -73,4 +101,7 @@
 Что говорить в докладе:
 - VLA рассматриваются как перспективное направление,
 - в текущей работе это обзорный и стратегический блок, а не экспериментальный результат.
+
+Подробная дипломная позиция:
+- [`DIPLOMA_VLA_POSITION.md`](DIPLOMA_VLA_POSITION.md)
 

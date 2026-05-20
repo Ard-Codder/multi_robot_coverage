@@ -1,0 +1,13 @@
+# Trajectories from strong classical teachers on large_complex_dynamic for ML-guided training.
+# No ml_guided here (avoid bootstrapping). Expand seeds_range for more data / longer runs.
+output_dir: results/lab/ml_teacher_large_complex
+scene_path: experiments_lab/scenes/large_complex_dynamic.yaml
+
+matrix:
+  algorithms:
+    - baseline_voronoi
+    - baseline_frontier
+    - stc
+    - darp_boustro
+  # half-open range: [0, 60) => 60 seeds × 4 algorithms = 240 JSON runs
+  seeds_range: [0, 60]

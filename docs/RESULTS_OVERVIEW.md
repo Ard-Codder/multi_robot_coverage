@@ -38,5 +38,18 @@
 
 - [`docs/METHOD_GROUPS.md`](METHOD_GROUPS.md)
 - [`docs/EXPERIMENTS_OVERVIEW.md`](EXPERIMENTS_OVERVIEW.md)
+- [`docs/DIPLOMA_RESEARCH_PACKAGE.md`](DIPLOMA_RESEARCH_PACKAGE.md)
+- [`docs/RESULTS_VALIDATION.md`](RESULTS_VALIDATION.md)
 - private talk drafts intentionally stay outside the public-facing path
+
+## 6. Материалы под диплом
+
+Главный вход для текста диплома:
+
+- [`DIPLOMA_RESEARCH_PACKAGE.md`](DIPLOMA_RESEARCH_PACKAGE.md) — единая исследовательская линия, прикладная классификация методов, экспериментальный протокол, VLA-позиция и каркас глав.
+
+Для диплома результаты лучше интерпретировать через trade-off, а не через один
+показатель coverage: время достижения порога, пройденная дистанция, blocked
+moves, баланс нагрузки и pedestrian safety вместе показывают практическую
+пригодность метода.
 

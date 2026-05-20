@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-set ISAAC_PYTHON=C:\isaacsim\python.bat
+set ISAAC_PYTHON=C:\Users\kirar\isaac-sim-standalone-5.0.0-windows-x86_64\python.bat
 set PROJECT_ROOT=%~dp0
 
 if not exist "%ISAAC_PYTHON%" (

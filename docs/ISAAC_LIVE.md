@@ -1,6 +1,18 @@
 # Запуск Isaac Sim (live-скрипты)
 
-Цель: один воспроизводимый сценарий визуального прогона с `require_isaac=True`.
+## Актуальное демо для ВКР (CoverageLab + Isaac Sim 5)
+
+Основные эксперименты диплома выполняются в **`coverage_lab`** (2D-симуляция, JSON с траекториями). Для **визуализации в Isaac Sim 5** используйте replay по сохранённому JSON:
+
+- Скрипт: [`experiments/isaac5_replay_coverage_lab.py`](../experiments/isaac5_replay_coverage_lab.py)
+- Документация: [`ISAAC_LARGE_COMPLEX_REPLAY.md`](ISAAC_LARGE_COMPLEX_REPLAY.md)
+- Быстрый запуск Windows: `run_isaac_replay_large_complex.bat <путь-к-json>`
+
+Ниже описан **legacy**-трек `coverage_sim` + старые `run_random_walk_live` / `run_zonal_live` (кинематический Python, без реального USD в текущей сборке).
+
+---
+
+Цель (legacy): один воспроизводимый сценарий визуального прогона с `require_isaac=True`.
 
 ## Быстрый запуск из корня репозитория (Windows)
 

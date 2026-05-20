@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Dict, List, Tuple
 
 import numpy as np
 
@@ -27,37 +27,68 @@ def build_dataset_from_runs(
     json_paths: List[Path],
     *,
     window: int = 9,
+    input_mode: str = "legacy",
 ) -> Tuple[np.ndarray, np.ndarray]:
-    """Supervised dataset: local visited map -> next move direction (from classical trajectories)."""
+    """Supervised dataset from teacher trajectories.
+
+    legacy: one channel with incremental visited cells.
+    rich: visited, blocked, free-unvisited, robot-center channels.
+    """
     X: List[np.ndarray] = []
     y: List[int] = []
+    rich = input_mode == "rich"
+    in_ch = 4 if rich else 1
     for jp in json_paths:
         data = json.loads(jp.read_text(encoding="utf-8"))
         bounds = data["bounds_xy"]
         x_min, x_max, y_min, y_max = [float(v) for v in bounds]
         res = float(data["grid_resolution_m"])
-        visited_cells = set(tuple(c) for c in data.get("visited_cells", []))
+        nx = max(1, int(np.ceil((x_max - x_min) / res)))
+        ny = max(1, int(np.ceil((y_max - y_min) / res)))
+        blocked_cells = set(tuple(c) for c in data.get("obstacle_cells", []))
         robot_paths: Dict[str, List[List[float]]] = data.get("robot_paths", {})
-        for pts in robot_paths.values():
-            if not pts or len(pts) < 2:
-                continue
-            arr = np.asarray(pts, dtype=float)
-            for i in range(len(arr) - 1):
-                p0 = arr[i]
-                p1 = arr[i + 1]
+        arrays = {
+            name: np.asarray(pts, dtype=float)
+            for name, pts in robot_paths.items()
+            if pts and len(pts) >= 2
+        }
+        if not arrays:
+            continue
+        max_len = max(len(arr) for arr in arrays.values())
+        visited_so_far: set[tuple[int, int]] = set()
+        for i in range(max_len - 1):
+            for arr in arrays.values():
+                if i < len(arr):
+                    c = (int((arr[i][0] - x_min) / res), int((arr[i][1] - y_min) / res))
+                    visited_so_far.add(c)
+            for pts in arrays.values():
+                if i >= len(pts) - 1:
+                    continue
+                p0 = pts[i]
+                p1 = pts[i + 1]
                 cx = int((p0[0] - x_min) / res)
                 cy = int((p0[1] - y_min) / res)
                 w = int(window)
                 r = w // 2
-                obs = np.zeros((w, w), dtype=np.float32)
+                obs = np.zeros((in_ch, w, w), dtype=np.float32)
                 for dx in range(-r, r + 1):
                     for dy in range(-r, r + 1):
-                        c = (cx + dx, cy + dy)
-                        if c in visited_cells:
-                            obs[dy + r, dx + r] = 1.0
-                X.append(obs[None, :, :])  # add channel dim
+                        cell = (cx + dx, cy + dy)
+                        if cell[0] < 0 or cell[1] < 0 or cell[0] >= nx or cell[1] >= ny:
+                            continue
+                        px, py = dy + r, dx + r
+                        if cell in visited_so_far:
+                            obs[0, px, py] = 1.0
+                        if rich:
+                            if cell in blocked_cells:
+                                obs[1, px, py] = 1.0
+                            if cell not in blocked_cells and cell not in visited_so_far:
+                                obs[2, px, py] = 1.0
+                            if dx == 0 and dy == 0:
+                                obs[3, px, py] = 1.0
+                X.append(obs)
                 y.append(_discretize_move(p0, p1))
     if not X:
-        return np.zeros((0, 1, window, window), dtype=np.float32), np.zeros((0,), dtype=np.int64)
+        return np.zeros((0, in_ch, window, window), dtype=np.float32), np.zeros((0,), dtype=np.int64)
     return np.stack(X, axis=0), np.asarray(y, dtype=np.int64)
 

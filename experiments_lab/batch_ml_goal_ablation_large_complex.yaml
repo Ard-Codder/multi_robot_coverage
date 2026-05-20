@@ -1,0 +1,12 @@
+output_dir: results/lab/ml_goal_ablation
+scene_path: experiments_lab/scenes/large_complex_dynamic.yaml
+
+matrix:
+  algorithms:
+    - baseline_voronoi
+    - baseline_frontier
+    - ml_guided_guarded
+    - ml_goal_pure
+    - ml_goal_soft_guarded
+    - ml_goal_guarded
+  seeds: [0, 1, 2]

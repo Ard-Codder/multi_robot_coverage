@@ -165,6 +165,7 @@ ALLOWED_ISAAC_LIVE = frozenset(
     {
         "experiments/run_random_walk_live.py",
         "experiments/run_zonal_live.py",
+        "experiments/isaac5_replay_coverage_lab.py",
     }
 )
 
@@ -245,7 +246,7 @@ TOOL_SPECS: List[Dict[str, str]] = [
     },
     {
         "name": "run_isaac_live_script",
-        "description": "Запуск live-скрипта Isaac (run_random_walk_live или run_zonal_live). script: путь от корня репо.",
+        "description": "Запуск live-скрипта Isaac (run_random_walk_live, run_zonal_live или isaac5_replay_coverage_lab). script: путь от корня репо.",
     },
 ]
 

@@ -1,0 +1,10 @@
+output_dir: results/lab/ml_guided_ablation
+scene_path: experiments_lab/scenes/large_complex_dynamic.yaml
+
+matrix:
+  algorithms:
+    - baseline_voronoi
+    - ml_guided_pure
+    - ml_guided_soft_guarded
+    - ml_guided_guarded
+  seeds: [0, 1, 2]

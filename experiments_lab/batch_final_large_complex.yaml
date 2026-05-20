@@ -1,0 +1,11 @@
+output_dir: results/lab/final_large_complex
+scene_path: experiments_lab/scenes/large_complex_dynamic.yaml
+
+matrix:
+  algorithms:
+    - ml_guided
+    - baseline_frontier
+    - baseline_voronoi
+    - stc
+    - darp_boustro
+  seeds: [0, 1, 2]

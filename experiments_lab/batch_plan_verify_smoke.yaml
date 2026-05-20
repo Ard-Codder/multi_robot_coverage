@@ -1,0 +1,9 @@
+# Short smoke batch for plan verification (1 seed, few algorithms).
+output_dir: results/lab/_plan_verify_smoke
+scene_path: experiments_lab/scenes/static_A_long.yaml
+
+matrix:
+  algorithms:
+    - baseline_voronoi
+    - baseline_frontier
+  seeds: [0]

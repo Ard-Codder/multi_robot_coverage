@@ -1,58 +1,258 @@
+# =============================================================================
 # Python
+# =============================================================================
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.so
+*.egg
+*.egg-info/
+.eggs/
 .Python
+build/
+dist/
+wheels/
+pip-wheel-metadata/
+.installed.cfg
+MANIFEST
+
+# Test / type / lint caches
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.tox/
+.nox/
+.cache/
+.hypothesis/
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
+nosetests.xml
+junit.xml
 
+# =============================================================================
 # Virtual environments
+# =============================================================================
 .venv/
 venv/
 env/
+ENV/
+.python-version
+pyvenv.cfg
 
+# =============================================================================
 # Jupyter / notebooks
+# =============================================================================
 .ipynb_checkpoints/
+*.nbconvert.ipynb
 
-# IDE / OS
+# =============================================================================
+# IDE / editor / OS
+# =============================================================================
 .idea/
 .vscode/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 .DS_Store
+$RECYCLE.BIN/
 
-# Logs / temp
+# =============================================================================
+# Logs / temporary / backup
+# =============================================================================
 *.log
 *.tmp
+*.temp
 *.bak
 *.swp
 *.swo
+*.orig
+*.rej
+*~
+
+# =============================================================================
+# ML / experiment artifacts
+# =============================================================================
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+*.pb
+*.tflite
+*.safetensors
+*.bin
+*.npy
+*.npz
+
+# Weights & runtime caches (track configs, not artifacts)
+wandb/
+mlruns/
+lightning_logs/
+runs/
+tb_logs/
+tensorboard/
+
+# =============================================================================
+# Project: experiment outputs (artifacts, large files, generated reports)
+# =============================================================================
+results/
+!results/.gitkeep
+
+# README / public showcase artifacts — kept in git so README renders on GitHub
+!results/lab/
+results/lab/*
+!results/lab/presentation_report/
+!results/lab/presentation_report/**
+!results/lab/showcase/
+!results/lab/showcase/**
+
+# Concrete README assets that live in regular run folders
+!results/lab/final_large_complex/
+results/lab/final_large_complex/*
+!results/lab/final_large_complex/large_complex_dynamic__ml_guided__seed2_coverage_2d.png
+!results/lab/presentation_dynamic/
+results/lab/presentation_dynamic/*
+!results/lab/presentation_dynamic/dynamic_B_long__baseline_voronoi__seed0.gif
+!results/lab/ideal_coverage_demo/
+results/lab/ideal_coverage_demo/*
+!results/lab/ideal_coverage_demo/large_complex_dynamic__ml_guided_guarded__seed2_isaac.gif
+
+# Public README assets in docs/
+!docs/assets/
+!docs/assets/**
 
 # Local experiment scratch
 experiments_lab/_tmp_*.yaml
+experiments_lab/_local_*.yaml
+experiments/_tmp_*.yaml
 
-# Optional local service outputs
-results/panel_uploads/
-results/agent_runs/
+# RL transient outputs (extra guard, even if results/ is tracked somewhere)
+**/checkpoints/
+**/eval_runs/
+**/tb/
+**/tb_logs/
 
-# RL transient outputs
-results/lab/rl/**/checkpoints/
-results/lab/rl/**/eval/
-results/lab/rl/**/tb/
+# Generated panel uploads
+panel/uploads/
+panel/_cache/
 
-# Cursor / local tooling
-.cursor/
-agent-tools/
+# =============================================================================
+# Thesis / diploma / presentations — NOT part of the code repo
+# =============================================================================
+# Typst sources, build artifacts, drafts
+docs/diploma_drafts/
+docs/diploma/
+docs/thesis/
+docs/presentations/
+docs/talks/
+docs/slides/
 
-# Private / non-public docs
+# Private / draft text materials in docs/
 docs/conference_talk_5min.md
 docs/conference_speaker_notes.md
 docs/THESIS_CHECKLIST.md
 docs/SURVEY_ML_PLANNERS_VLA.md
 docs/SCENE_RL_SPEC.md
 docs/REPRODUCIBILITY.md
-*Классические алгоритмы покрытия территории*.pdf
 
+# Anything diploma- or presentation-related in docs/
+docs/**/DIPLOMA_*
+docs/**/PRESENTATION_*
+docs/**/THESIS_*
+docs/**/SPEECH_*
+docs/**/TALK_*
+docs/**/SLIDES_*
+docs/**/diploma_*
+docs/**/presentation_*
+docs/**/thesis_*
+docs/**/*_DIPLOMA*
+docs/**/*_PRESENTATION*
+docs/**/*_THESIS*
+docs/**/*_SPEECH*
+docs/**/*_SLIDES*
+
+# Any thesis-related binaries anywhere in the repo
+*.pdf
+*.pptx
+*.ppt
+*.key
+*.odp
+*.doc
+*.docx
+*.rtf
+
+# Russian-named draft files (top-level / nested)
+*Классические алгоритмы покрытия территории*
+
+# Local thesis / diploma workspaces
+thesis_workspace/
+diploma_workspace/
+diploma_agent/_workspace/
+**/.diploma_cache/
+
+# Vector stores / embeddings used by local agents
+*.qdrant/
+*.chromadb/
+chroma.sqlite3
+chroma.sqlite3-*
+embeddings.db
+*.faiss
+*.index
+
+# =============================================================================
+# Cursor / local agent tooling
+# =============================================================================
+.cursor/
+agent-tools/
+.agent/
+.cursorignore.local
+
+# =============================================================================
+# Large bundles / previews / media
+# =============================================================================
+preview.zip
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+
+# Generated GIFs / videos (allow project / showcase assets via explicit exception)
+*.gif
+*.mp4
+*.mov
+*.avi
+*.webm
+!docs/assets/**/*.gif
+!coverage_lab/**/assets/**/*.gif
+!results/lab/presentation_report/**/*.gif
+!results/lab/showcase/**/*.gif
+
+# =============================================================================
+# Environment / secrets
+# =============================================================================
+.env
+.env.*
+!.env.example
+secrets.*
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# =============================================================================
+# OS-specific clutter
+# =============================================================================
+Icon?
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes

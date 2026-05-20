@@ -1,6 +1,11 @@
 import json
 
-from agent.tools import extract_and_run_tool_calls, run_coverage_experiment, run_isaac_live_script
+from agent.tools import (
+    ALLOWED_ISAAC_LIVE,
+    extract_and_run_tool_calls,
+    run_coverage_experiment,
+    run_isaac_live_script,
+)
 
 
 def test_run_coverage_experiment_returns_json() -> None:
@@ -23,6 +28,10 @@ def test_run_isaac_live_rejects_unknown_script() -> None:
     s = run_isaac_live_script("experiments/not_allowed.py")
     data = json.loads(s)
     assert "error" in data
+
+
+def test_run_isaac_live_allowlist_includes_isaac5_replay() -> None:
+    assert "experiments/isaac5_replay_coverage_lab.py" in ALLOWED_ISAAC_LIVE
 
 
 def test_extract_tool_calls() -> None:

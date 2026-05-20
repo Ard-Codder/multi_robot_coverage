@@ -80,5 +80,20 @@ python scripts/build_presentation_report.py --static results/lab/presentation_st
 1. `report_cards.md` — компактное сравнение алгоритмов.
 2. `panel_median_dynamic.png` — итог по динамической сцене.
 3. `GIF_INDEX.md` — какие GIF открывать для демонстрации.
-4. `conference_talk_5min.md` и `conference_speaker_notes.md` — материалы под доклад.
+4. `docs/DIPLOMA_RESEARCH_PACKAGE.md` — как связать результаты с дипломной классификацией, VLA-блоком и текстом глав.
+5. `docs/DIPLOMA_EXPERIMENTS_AND_METRICS.md` — как описывать метрики и экспериментальный раздел.
+
+## Как использовать результаты в дипломе
+
+Для static-сцены основной вопрос: какие методы быстрее и стабильнее достигают
+высокого покрытия при разумной длине траекторий. Для dynamic-сцены одного
+coverage недостаточно: обязательно обсуждать `min_pedestrian_clearance_m`,
+`robot_ped_violations`, `blocked_moves` и `load_balance_cv`.
+
+Рекомендуемый порядок анализа:
+
+1. Сначала показать медианы по seed из `presentation_report/report_cards.md`.
+2. Затем разобрать static и dynamic отдельно, потому что у них разные target coverage и ограничения.
+3. После этого показать learning-based блок (`ml_guided`, `ppo_policy`) как practical/hybrid comparison, а не как окончательный SOTA-вывод.
+4. MAPF/CBS описывать как слой координации и де-конфликта поверх coverage planner, а не как самостоятельный алгоритм покрытия.
 

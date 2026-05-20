@@ -1,0 +1,9 @@
+output_dir: results/lab/final_large_complex_smoke
+scene_path: experiments_lab/scenes/large_complex_dynamic.yaml
+
+matrix:
+  algorithms:
+    - baseline_frontier
+    - baseline_voronoi
+    - ml_guided
+  seeds: [0]

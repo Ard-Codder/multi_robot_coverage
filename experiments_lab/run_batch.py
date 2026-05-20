@@ -14,6 +14,7 @@ Writes per-run JSON + summary.csv and renders PNG/GIF next to JSON.
 
 import argparse
 import csv
+import json
 import os
 from pathlib import Path
 from typing import Any, Dict, List
@@ -38,6 +39,7 @@ from coverage_lab.algorithms.baselines import (
 )
 from coverage_lab.algorithms.classic import Boustrophedon, DARP, STC
 from coverage_lab.algorithms.mapf_wrapped import CBSDeconflictWrapper
+from coverage_lab.ml_planner.goal_guided_algo import MLGoalPlanner
 from coverage_lab.ml_planner.guided_algo import MLGuidedPlanner
 from coverage_lab.rl.ppo_policy import PpoPolicyPlanner
 
@@ -70,13 +72,53 @@ def _algo_factory(name: str, seed: int):
         return DARP(inner="boustro")
     if n == "darp_stc":
         return DARP(inner="stc")
-    if n == "ml_guided":
-        # default model path (can be overridden by env var or future config expansion)
-        model_path = str((ROOT / "results" / "lab" / "ml_guided" / "model.pt").resolve())
+    if n in {"ml_guided", "ml_guided_pure", "ml_guided_soft_guarded", "ml_guided_guarded"}:
+        model_env = os.environ.get("ML_MODEL_PATH")
+        model_path = str((ROOT / model_env).resolve()) if model_env else str((ROOT / "results" / "lab" / "ml_guided" / "model.pt").resolve())
+        if not Path(model_path).exists():
+            print(f"[skip] {name}: model not found at {model_path}; train with experiments_lab/train_ml_guided.py or set ML_MODEL_PATH")
+            return None
+        mode = {
+            "ml_guided": "soft_guarded",
+            "ml_guided_pure": "pure",
+            "ml_guided_soft_guarded": "soft_guarded",
+            "ml_guided_guarded": "guarded",
+        }[n]
         try:
-            return MLGuidedPlanner(model_path=model_path, window=9)
+            return MLGuidedPlanner(model_path=model_path, window=9, mode=mode)
         except (ImportError, OSError) as e:
-            print(f"[skip] ml_guided: torch/model load failed: {e}")
+            print(f"[skip] {name}: torch/model load failed: {e}")
+            return None
+    if n in {
+        "ml_goal",
+        "ml_goal_pure",
+        "ml_goal_soft_guarded",
+        "ml_goal_guarded",
+        "ml_goal_ranked",
+        "ml_goal_allocated",
+    }:
+        model_env = os.environ.get("ML_GOAL_MODEL_PATH")
+        model_path = str((ROOT / model_env).resolve()) if model_env else str((ROOT / "results" / "lab" / "ml_goal" / "model.pt").resolve())
+        if not Path(model_path).exists():
+            print(f"[skip] {name}: goal model not found at {model_path}; train with experiments_lab/train_ml_goal.py or set ML_GOAL_MODEL_PATH")
+            return None
+        mode = {
+            "ml_goal": "soft_guarded",
+            "ml_goal_pure": "pure",
+            "ml_goal_soft_guarded": "soft_guarded",
+            "ml_goal_guarded": "guarded",
+            "ml_goal_ranked": "soft_guarded",
+            "ml_goal_allocated": "soft_guarded",
+        }[n]
+        try:
+            return MLGoalPlanner(
+                model_path=model_path,
+                mode=mode,
+                top_k=24 if n in {"ml_goal_ranked", "ml_goal_allocated"} else 16,
+                use_allocation=n != "ml_goal_ranked",
+            )
+        except (ImportError, OSError) as e:
+            print(f"[skip] {name}: torch/model load failed: {e}")
             return None
     if n == "ppo_policy":
         env_path = Path(str(os.environ.get("PPO_MODEL_PATH", ""))).expanduser() if os.environ.get("PPO_MODEL_PATH") else None
@@ -121,6 +163,26 @@ def _flatten(row: Dict[str, Any]) -> Dict[str, Any]:
         "robot_robot_collisions": row.get("robot_robot_collisions"),
         "robot_ped_violations": row.get("robot_ped_violations"),
         "json_path": row.get("_json_path"),
+        "ml_mode": row.get("ml_mode"),
+        "ml_input_mode": row.get("ml_input_mode"),
+        "ml_model_variant": row.get("ml_model_variant"),
+        "ml_total_decisions": row.get("ml_total_decisions"),
+        "ml_model_steps": row.get("ml_model_steps"),
+        "ml_fallback_steps": row.get("ml_fallback_steps"),
+        "ml_model_step_rate": row.get("ml_model_step_rate"),
+        "ml_fallback_rate": row.get("ml_fallback_rate"),
+        "ml_unsafe_model_targets": row.get("ml_unsafe_model_targets"),
+        "ml_action_counts": json.dumps(row.get("ml_action_counts") or {}, ensure_ascii=False),
+        "ml_goal_mode": row.get("ml_goal_mode"),
+        "ml_goal_total_decisions": row.get("ml_goal_total_decisions"),
+        "ml_goal_model_steps": row.get("ml_goal_model_steps"),
+        "ml_goal_fallback_steps": row.get("ml_goal_fallback_steps"),
+        "ml_goal_model_rate": row.get("ml_goal_model_rate"),
+        "ml_goal_fallback_rate": row.get("ml_goal_fallback_rate"),
+        "ml_goal_unsafe_goals": row.get("ml_goal_unsafe_goals"),
+        "ml_goal_avg_l1_distance": row.get("ml_goal_avg_l1_distance"),
+        "ml_goal_allocated_steps": row.get("ml_goal_allocated_steps"),
+        "ml_goal_reserved_conflicts": row.get("ml_goal_reserved_conflicts"),
     }
 
 
@@ -144,7 +206,12 @@ def main() -> None:
 
     matrix = cfg.get("matrix") or {}
     algorithms: List[str] = list(matrix.get("algorithms") or [])
-    seeds: List[int] = list(matrix.get("seeds") or [0])
+    seeds: List[int] = list(matrix.get("seeds") or [])
+    sr = matrix.get("seeds_range")
+    if isinstance(sr, (list, tuple)) and len(sr) == 2:
+        seeds = list(range(int(sr[0]), int(sr[1])))
+    if not seeds:
+        seeds = [0]
     if not algorithms:
         raise SystemExit("matrix.algorithms empty")
 
@@ -171,6 +238,11 @@ def main() -> None:
             result["_json_path"] = str(json_path.relative_to(ROOT))
             save_result_json(json_path, result)
             summary_rows.append(_flatten(result))
+            print(
+                f"[run] {algo_name} seed={seed} steps={result.get('steps')} "
+                f"cov={float(result.get('coverage_percent') or 0):.2f}",
+                flush=True,
+            )
 
             if args.render:
                 prefix = output_dir / stem

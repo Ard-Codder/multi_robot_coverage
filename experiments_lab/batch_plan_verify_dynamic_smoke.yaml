@@ -1,0 +1,7 @@
+output_dir: results/lab/_plan_verify_dynamic_smoke
+scene_path: experiments_lab/scenes/dynamic_B_long.yaml
+
+matrix:
+  algorithms:
+    - baseline_voronoi
+  seeds: [0]

@@ -126,5 +126,10 @@ def run_experiment_lab(
         "robot_ped_violations": int(state.robot_ped_violations),
         "robot_paths": robot_paths,
     }
+    if hasattr(algorithm, "diagnostics"):
+        try:
+            res.update(algorithm.diagnostics())
+        except (TypeError, ValueError, AttributeError):
+            pass
     return res
 

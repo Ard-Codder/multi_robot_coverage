@@ -1,0 +1,41 @@
+scene:
+  name: "large_complex_dynamic"
+  bounds_xy:
+    x_min: -25.0
+    x_max: 25.0
+    y_min: -18.0
+    y_max: 18.0
+  dt_sec: 0.1
+  grid_resolution_m: 0.75
+  num_robots: 8
+  max_steps: 5200
+  target_coverage: 0.78
+
+  # City-like blocks plus narrow passages. The scene is large enough to show
+  # multi-agent coordination, but still bounded for repeatable demo runs.
+  rectangles:
+    - { x: -16.0, y:  10.0, w: 8.0, h: 4.0 }
+    - { x:  -4.5, y:  11.0, w: 5.0, h: 5.0 }
+    - { x:   9.0, y:  10.0, w: 8.5, h: 4.5 }
+    - { x:  18.5, y:   1.0, w: 4.0, h: 11.0 }
+    - { x: -18.5, y:  -2.0, w: 4.0, h: 9.0 }
+    - { x:  -8.0, y:  -8.5, w: 7.0, h: 5.0 }
+    - { x:   5.0, y:  -9.0, w: 7.5, h: 4.0 }
+    - { x:   0.0, y:   1.5, w: 12.0, h: 2.5 }
+    - { x:   0.0, y:  -3.5, w: 4.0, h: 3.0 }
+
+  obstacles:
+    - { x: -11.0, y:  1.0, r: 1.25 }
+    - { x:  -2.0, y:  6.0, r: 1.10 }
+    - { x:   7.0, y:  3.0, r: 1.30 }
+    - { x:  13.0, y: -6.0, r: 1.05 }
+    - { x: -13.5, y: -9.5, r: 1.15 }
+    - { x:   0.0, y: 14.5, r: 1.00 }
+
+  pedestrians:
+    - { id: "ped_0", x: -23.0, y:  0.0, goal_b_x: 23.0, goal_b_y:  0.0, radius_m: 0.36, max_speed_mps: 1.15 }
+    - { id: "ped_1", x:  22.0, y: -6.0, goal_b_x: -22.0, goal_b_y: -6.0, radius_m: 0.36, max_speed_mps: 1.05 }
+    - { id: "ped_2", x: -10.0, y: -16.0, goal_b_x: -10.0, goal_b_y: 16.0, radius_m: 0.36, max_speed_mps: 1.00 }
+    - { id: "ped_3", x:   6.0, y:  16.0, goal_b_x:   6.0, goal_b_y: -16.0, radius_m: 0.36, max_speed_mps: 1.10 }
+    - { id: "ped_4", x: -22.0, y:  12.0, goal_b_x:  22.0, goal_b_y: -12.0, radius_m: 0.36, max_speed_mps: 0.95 }
+    - { id: "ped_5", x:  20.0, y:  14.0, goal_b_x: -20.0, goal_b_y:  14.0, radius_m: 0.36, max_speed_mps: 1.00 }
